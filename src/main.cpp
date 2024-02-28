@@ -17,22 +17,22 @@ struct B
 class Evaluate
 {
 public:
-  static void parse(std::string, std::any);
+  static std::any parse(std::string, std::any);
 };
 
-void Evaluate::parse(std::string key, std::any value)
+std::any Evaluate::parse(std::string key, std::any value)
 {
   if (key == "A")
   {
     A a;
     a.integerValue = std::any_cast<int>(value);
-    selectedStruct = a;
+    return a;
   }
   else if (key == "B")
   {
     B b;
     b.doubleValue = std::any_cast<double>(value);
-    selectedStruct = b;
+    return b;
   }
   else
   {
@@ -42,10 +42,10 @@ void Evaluate::parse(std::string key, std::any value)
 
 int main()
 {
-  Evaluate::parse("A", 123);
+  selectedStruct = Evaluate::parse("A", 123);
   std::cout << std::any_cast<A>(selectedStruct).integerValue << std::endl;
 
-  Evaluate::parse("B", 456.789);
+  selectedStruct = Evaluate::parse("B", 456.789);
   std::cout << std::any_cast<B>(selectedStruct).doubleValue << std::endl;
 
   return EXIT_SUCCESS;
