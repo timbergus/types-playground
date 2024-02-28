@@ -17,10 +17,10 @@ struct B
 class Evaluate
 {
 public:
-  static std::any parse(std::string, std::any);
+  static std::any parse(std::string_view, std::any);
 };
 
-std::any Evaluate::parse(std::string key, std::any value)
+std::any Evaluate::parse(std::string_view key, std::any value)
 {
   if (key == "A")
   {
@@ -42,10 +42,13 @@ std::any Evaluate::parse(std::string key, std::any value)
 
 int main()
 {
-  selectedStruct = Evaluate::parse("A", 123);
+  std::string_view keyA{"A"};
+  std::string_view keyB{"B"};
+
+  selectedStruct = Evaluate::parse(keyA, 123);
   std::cout << std::any_cast<A>(selectedStruct).integerValue << std::endl;
 
-  selectedStruct = Evaluate::parse("B", 456.789);
+  selectedStruct = Evaluate::parse(keyB, 456.789);
   std::cout << std::any_cast<B>(selectedStruct).doubleValue << std::endl;
 
   return EXIT_SUCCESS;
