@@ -12,10 +12,18 @@ int main()
   std::string_view keyB{"B,DATA"};
 
   selectedStruct = Evaluate::parse(keyA, 123);
-  std::cout << std::any_cast<A>(selectedStruct).integerValue << std::endl;
+
+  if (selectedStruct.has_value())
+  {
+    std::cout << std::any_cast<A>(selectedStruct).integerValue << std::endl;
+  }
 
   selectedStruct = Evaluate::parse(keyB, 456.789);
-  std::cout << std::any_cast<B>(selectedStruct).doubleValue << std::endl;
+
+  if (selectedStruct.has_value())
+  {
+    std::cout << std::any_cast<B>(selectedStruct).doubleValue << std::endl;
+  }
 
   return EXIT_SUCCESS;
 }
